@@ -1,0 +1,387 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>University Lab Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        /* ================= CSS STYLES ================= */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(-45deg, #1e3c72, #2a5298, #6a11cb, #2575fc);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            min-height: 100vh;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Navigation */
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo { font-size: 22px; font-weight: 800; letter-spacing: 1px; }
+
+        .links a {
+            color: #ddd;
+            text-decoration: none;
+            margin-left: 20px;
+            font-weight: 600;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .links a:hover, .links a.active { 
+            color: #fff; 
+            border-bottom: 2px solid #fff; 
+            padding-bottom: 5px; 
+        }
+
+        /* Views Management */
+        .view-section {
+            display: none;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        .view-section.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Layouts & Cards */
+        .main-content { max-width: 1000px; margin: 60px auto; padding: 0 20px; }
+        .hero-section { display: flex; justify-content: center; align-items: center; height: 70vh; }
+        .row-layout { display: flex; gap: 30px; align-items: flex-start; }
+        .table-section { flex: 2; }
+        .rules-section { flex: 1; }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        .text-center { text-align: center; }
+        .glass-card h1 { font-size: 36px; margin-bottom: 15px; }
+        .glass-card h2 { margin-bottom: 25px; border-bottom: 1px solid rgba(255,255,255,0.3); padding-bottom: 10px; }
+        .glass-card p { font-size: 16px; margin-bottom: 25px; color: #eee; }
+
+        .departments { margin-bottom: 30px; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
+        .tag { background: rgba(255, 255, 255, 0.2); padding: 8px 15px; border-radius: 20px; font-size: 14px; }
+
+        /* Buttons & Forms */
+        .primary-btn {
+            display: inline-block;
+            background: linear-gradient(90deg, #ff8a00, #e52e71);
+            color: white;
+            padding: 15px 35px;
+            border-radius: 30px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 16px;
+        }
+        .primary-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(229, 46, 113, 0.4); }
+        .w-100 { width: 100%; margin-top: 20px; }
+
+        .row { display: flex; gap: 20px; }
+        .half { width: 50%; }
+        .input-group { margin-bottom: 20px; text-align: left; }
+        .input-group label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 14px; }
+        .input-group input, .input-group select {
+            width: 100%; padding: 12px; border-radius: 10px; border: none; outline: none; font-size: 15px;
+            background: rgba(255, 255, 255, 0.9); color: #333;
+        }
+        .input-group input:focus, .input-group select:focus { border: 2px solid #ff8a00; }
+        select:disabled { background: rgba(255, 255, 255, 0.5); cursor: not-allowed; }
+
+        /* Status Page */
+        .glass-table { width: 100%; border-collapse: collapse; margin-top: 15px; color: #fff; }
+        .glass-table th, .glass-table td { padding: 12px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.2); }
+        .badge { background: #ff4757; padding: 5px 10px; border-radius: 15px; font-size: 12px; }
+        .rules-list { list-style: none; }
+        .rules-list li { margin-bottom: 15px; font-size: 14px; line-height: 1.6; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; }
+
+        .hidden { display: none !important; }
+        .alert-success { margin-top: 20px; padding: 15px; background: rgba(46, 204, 113, 0.3); border: 1px solid #2ecc71; border-radius: 10px; text-align: center; font-weight: 600;}
+    </style>
+</head>
+<body>
+
+    <!-- NAVIGATION -->
+    <nav class="glass-nav">
+        <div class="logo">🎓 Central University Labs</div>
+        <div class="links">
+            <a onclick="switchView('home-view')" id="nav-home" class="active">Home</a>
+            <a onclick="switchView('booking-view')" id="nav-booking">Book Equipment</a>
+            <a onclick="switchView('status-view')" id="nav-status">Live Status & Rules</a>
+        </div>
+    </nav>
+
+    <!-- 1. HOME PAGE VIEW -->
+    <div id="home-view" class="view-section active">
+        <div class="main-content hero-section">
+            <div class="glass-card text-center">
+                <h1>Advanced Laboratory Booking System</h1>
+                <p>Access state-of-the-art equipment across Computer Science, Chemistry, Biology, and Physics departments.</p>
+                
+                <div class="departments">
+                    <span class="tag">💻 Computer Science</span>
+                    <span class="tag">🧪 Chemistry</span>
+                    <span class="tag">🧬 Biology</span>
+                    <span class="tag">⚙️ Physics</span>
+                </div>
+
+                <button onclick="switchView('booking-view')" class="primary-btn">Start Booking Now 🚀</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. BOOKING PAGE VIEW -->
+    <div id="booking-view" class="view-section">
+        <div class="main-content">
+            <div class="glass-card">
+                <h2>Make a Reservation</h2>
+                <form id="bookingForm">
+                    <div class="input-group">
+                        <label>Student Name</label>
+                        <input type="text" id="studentName" required placeholder="Enter your full name">
+                    </div>
+
+                    <div class="row">
+                        <div class="input-group half">
+                            <label>Select Department Lab</label>
+                            <select id="labType" required>
+                                <option value="" disabled selected>Choose lab...</option>
+                                <option value="Computer Science">Computer Science Lab</option>
+                                <option value="Chemistry">Chemistry Lab</option>
+                                <option value="Biology">Biology Lab</option>
+                                <option value="Physics">Physics Lab</option>
+                            </select>
+                        </div>
+                        <div class="input-group half">
+                            <label>Select Equipment</label>
+                            <select id="equipment" required disabled>
+                                <option value="" disabled selected>Select department first...</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-group half">
+                            <label>Date</label>
+                            <input type="date" id="bookingDate" required>
+                        </div>
+                        <div class="input-group half">
+                            <label>Available Time Slots</label>
+                            <select id="timeSlot" required disabled>
+                                <option value="" disabled selected>Select date & equipment first...</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="primary-btn w-100">Confirm Booking</button>
+                    <div id="successMsg" class="hidden alert-success">✅ Booking Saved! Check Live Status Page.</div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. STATUS & RULES VIEW -->
+    <div id="status-view" class="view-section">
+        <div class="main-content row-layout">
+            <div class="glass-card table-section">
+                <h2>Live Reservation Board</h2>
+                <table class="glass-table">
+                    <thead>
+                        <tr>
+                            <th>Department</th>
+                            <th>Equipment</th>
+                            <th>Date & Time</th>
+                            <th>Student</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                        <!-- JS injects bookings here -->
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="glass-card rules-section">
+                <h2>University Lab Rules</h2>
+                <ul class="rules-list">
+                    <li><strong>ID Required:</strong> Present your university ID card prior to accessing the workstation.</li>
+                    <li><strong>No Food/Drinks:</strong> Strictly prohibited inside computer, chemical, and biological labs.</li>
+                    <li><strong>Clean Up:</strong> Wash beakers (Chemistry) and shut down workstations (CS) before leaving.</li>
+                    <li><strong>Punctuality:</strong> Reservations are automatically cancelled if you are 15 minutes late.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= JAVASCRIPT ================= -->
+    <script>
+        // 1. Navigation Logic (Switching between pages)
+        function switchView(viewId) {
+            // Hide all views
+            document.querySelectorAll('.view-section').forEach(view => {
+                view.classList.remove('active');
+            });
+            // Show target view
+            document.getElementById(viewId).classList.add('active');
+
+            // Update navbar active underline
+            document.querySelectorAll('.links a').forEach(link => {
+                link.classList.remove('active');
+            });
+            document.getElementById('nav-' + viewId.split('-')[0]).classList.add('active');
+        }
+
+        // 2. Database & Data Setup
+        let db = [
+            { lab: "Computer Science", equipment: "High-End Workstation", date: "2026-11-27", time: "09:00 AM - 11:00 AM", name: "Rahul S." },
+            { lab: "Physics", equipment: "Oscilloscope", date: "2026-11-27", time: "11:30 AM - 01:30 PM", name: "Anjali M." }
+        ];
+
+        const defaultTimeSlots = ["09:00 AM - 11:00 AM", "11:30 AM - 01:30 PM", "02:00 PM - 04:00 PM"];
+
+        const equipmentData = {
+            "Computer Science": ["High-End Workstation", "VR Headset", "Server Rack Access"],
+            "Chemistry": ["Fume Hood Station", "Spectrophotometer", "Centrifuge"],
+            "Biology": ["Compound Microscope", "Autoclave", "Incubator"],
+            "Physics": ["Oscilloscope", "Laser Kit", "Spectrometer"]
+        };
+
+        // 3. Form Elements Setup
+        const labTypeSelect = document.getElementById('labType');
+        const equipmentSelect = document.getElementById('equipment');
+        const dateInput = document.getElementById('bookingDate');
+        const timeSelect = document.getElementById('timeSlot');
+        const form = document.getElementById('bookingForm');
+        const tableBody = document.getElementById('tableBody');
+
+        // Populate Table Function
+        function updateTable() {
+            tableBody.innerHTML = '';
+            db.forEach(booking => {
+                let row = document.createElement('tr');
+                row.innerHTML = `
+                    <td><strong>${booking.lab}</strong></td>
+                    <td>${booking.equipment}</td>
+                    <td>${booking.date} | ${booking.time}</td>
+                    <td>${booking.name}</td>
+                    <td><span class="badge">Reserved</span></td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+        updateTable(); // Run once on load
+
+        // 4. Smart Dropdown Logic
+        labTypeSelect.addEventListener('change', function() {
+            equipmentSelect.disabled = false;
+            equipmentSelect.innerHTML = '<option value="" disabled selected>Select equipment...</option>';
+            
+            const selectedLab = labTypeSelect.value;
+            equipmentData[selectedLab].forEach(item => {
+                let opt = document.createElement('option');
+                opt.value = item;
+                opt.textContent = item;
+                equipmentSelect.appendChild(opt);
+            });
+            checkAvailability();
+        });
+
+        // 5. Booking Availability Check
+        function checkAvailability() {
+            if (!equipmentSelect.value || !dateInput.value) {
+                timeSelect.disabled = true;
+                timeSelect.innerHTML = '<option value="" disabled selected>Select date & equipment first...</option>';
+                return;
+            }
+
+            timeSelect.disabled = false;
+            timeSelect.innerHTML = '<option value="" disabled selected>Select an available time...</option>';
+
+            defaultTimeSlots.forEach(slot => {
+                const isBooked = db.some(b => 
+                    b.equipment === equipmentSelect.value && 
+                    b.date === dateInput.value && 
+                    b.time === slot
+                );
+
+                let opt = document.createElement('option');
+                opt.value = slot;
+                if (isBooked) {
+                    opt.textContent = `${slot} (❌ Booked)`;
+                    opt.disabled = true;
+                } else {
+                    opt.textContent = `${slot} (✅ Available)`;
+                }
+                timeSelect.appendChild(opt);
+            });
+        }
+
+        equipmentSelect.addEventListener('change', checkAvailability);
+        dateInput.addEventListener('change', checkAvailability);
+
+        // 6. Submit Booking Logic
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const newBooking = {
+                lab: labTypeSelect.value,
+                equipment: equipmentSelect.value,
+                date: dateInput.value,
+                time: timeSelect.value,
+                name: document.getElementById('studentName').value
+            };
+
+            db.push(newBooking); // Save to in-memory database
+            updateTable();       // Immediately add to the Status Table
+
+            const successMsg = document.getElementById('successMsg');
+            successMsg.classList.remove('hidden');
+            form.reset();
+            checkAvailability(); 
+            
+            setTimeout(() => {
+                successMsg.classList.add('hidden');
+                // Automatically switch to the status page so the user can see their booking
+                switchView('status-view');
+            }, 1500);
+        });
+    </script>
+</body>
+</html>

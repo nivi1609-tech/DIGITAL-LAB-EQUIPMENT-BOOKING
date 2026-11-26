@@ -1,0 +1,111 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Beautiful Animated Gradient Background */
+body {
+    background: linear-gradient(-45deg, #1e3c72, #2a5298, #6a11cb, #2575fc);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+    min-height: 100vh;
+    color: #fff;
+}
+
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Glassmorphism Navigation */
+.glass-nav {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(15px);
+    padding: 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.logo { font-size: 22px; font-weight: 800; letter-spacing: 1px; }
+
+.links a {
+    color: #ddd;
+    text-decoration: none;
+    margin-left: 20px;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.links a:hover, .links a.active { color: #fff; border-bottom: 2px solid #fff; padding-bottom: 5px; }
+
+/* Layouts */
+.main-content { max-width: 1000px; margin: 60px auto; padding: 0 20px; }
+.hero-section { display: flex; justify-content: center; align-items: center; height: 70vh; }
+.row-layout { display: flex; gap: 30px; align-items: flex-start; }
+.table-section { flex: 2; }
+.rules-section { flex: 1; }
+
+/* Glassmorphism Cards */
+.glass-card {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(20px);
+    padding: 40px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+}
+
+.text-center { text-align: center; }
+.glass-card h1 { font-size: 36px; margin-bottom: 15px; }
+.glass-card h2 { margin-bottom: 25px; border-bottom: 1px solid rgba(255,255,255,0.3); padding-bottom: 10px; }
+.glass-card p { font-size: 16px; margin-bottom: 25px; color: #eee; }
+
+/* Tags for Home Page */
+.departments { margin-bottom: 30px; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
+.tag { background: rgba(255, 255, 255, 0.2); padding: 8px 15px; border-radius: 20px; font-size: 14px; }
+
+/* Buttons */
+.primary-btn {
+    display: inline-block;
+    background: linear-gradient(90deg, #ff8a00, #e52e71);
+    color: white;
+    padding: 15px 35px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s;
+    font-size: 16px;
+}
+.primary-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(229, 46, 113, 0.4); }
+.w-100 { width: 100%; margin-top: 20px; }
+
+/* Forms */
+.row { display: flex; gap: 20px; }
+.half { width: 50%; }
+.input-group { margin-bottom: 20px; text-align: left; }
+.input-group label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 14px; }
+.input-group input, .input-group select {
+    width: 100%; padding: 12px; border-radius: 10px; border: none; outline: none; font-size: 15px;
+    background: rgba(255, 255, 255, 0.9); color: #333;
+}
+.input-group input:focus, .input-group select:focus { border: 2px solid #ff8a00; }
+select:disabled { background: rgba(255, 255, 255, 0.5); cursor: not-allowed; }
+
+/* Status Page Elements */
+.glass-table { width: 100%; border-collapse: collapse; margin-top: 15px; color: #fff; }
+.glass-table th, .glass-table td { padding: 12px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.2); }
+.badge { background: #ff4757; padding: 5px 10px; border-radius: 15px; font-size: 12px; }
+
+.rules-list { list-style: none; }
+.rules-list li { margin-bottom: 15px; font-size: 14px; line-height: 1.6; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; }
+
+.hidden { display: none; }
+.alert-success { margin-top: 20px; padding: 15px; background: rgba(46, 204, 113, 0.3); border: 1px solid #2ecc71; border-radius: 10px; text-align: center; }
